@@ -49,22 +49,23 @@ var cardIsOpen = false;
 var animationSpeed = 375;
 
 function animateCard(cardNum) {
-	// animationSpeed = 375;
-	removeActive(10);
-	$(("#card"+cardNum)).animate({
-		opacity: 1,
-		left: "45%"
-	}, animationSpeed);
-	$(("#card"+cardNum)).removeClass("card-hidden").addClass("active");
-	if (cardIsOpen == false) {
-		$(".tabs").animate({
-			left: "5%"
+	if (!($("#card"+cardNum).hasClass("active"))) {
+		removeActive(10);
+		$(("#card"+cardNum)).animate({
+			opacity: 1,
+			left: "45%"
 		}, animationSpeed);
-		$(".home").animate({
-			left: "10%"
-		}, animationSpeed);
-		cardIsOpen = true;
-		$(".slider").css("left", "10%")
+		$(("#card"+cardNum)).removeClass("card-hidden").addClass("active");
+		if (cardIsOpen == false) {
+			$(".tabs").animate({
+				left: "5%"
+			}, animationSpeed);
+			$(".home").animate({
+				left: "10%"
+			}, animationSpeed);
+			cardIsOpen = true;
+			$(".slider").css("left", "10%")
+		}
 	}
 }
 
