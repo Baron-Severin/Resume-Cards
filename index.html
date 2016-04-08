@@ -8,6 +8,7 @@
     <title>Shifting Cards</title>
 </head>
 <body>
+	<!-- Any new tabs must follow the following format: id="tab#", onclick="animateCard(#)" -->
     <div class="tabs box">
     	<a id="home" onclick="closeCards()">Home</a><br>
         <a id="tab1" onclick="animateCard(1)">Tab 1</a><br>
@@ -27,6 +28,8 @@
             Aldus PageMaker including versions of Lorem Ipsum.</p>
     </div>
 
+    <!-- New cards must retain below classes.  Also must have id="card#" where # matches the 
+    associated tab# -->
     <div id="card1" class="card-hidden card box slider">
             <p>Why hello there!</p>
     </div>
@@ -46,47 +49,65 @@
 <script>
 
 var cardIsOpen = false;
+// Global value animationSpeed can be altered here to change the animation
 var animationSpeed = 375;
 
+// Starting positions are: Home card at cardCenter, Sliders at cardCenter (invisible), Tabs at tabsCenter
+// When a card slides out, Home card moves to cardLeft, Sliders move to cardRight, Tabs move to tabsLeft
+var cardRight = "45%";
+var cardCenter = "30%";
+var cardLeft = "10%";
+var tabsCenter = "25%";
+var tabsLeft = "5%";
+
 function animateCard(cardNum) {
+	// If the selected card is already open, animation should not play
 	if (!($("#card"+cardNum).hasClass("active"))) {
+
+		// Slide back active card
 		removeActive(10);
+
+		// Move slider right
 		$(("#card"+cardNum)).animate({
 			opacity: 1,
-			left: "45%"
+			left: cardRight,
 		}, animationSpeed);
 		$(("#card"+cardNum)).removeClass("card-hidden").addClass("active");
+
+		// If no card is currently open, Tabs and Home need to move left
 		if (cardIsOpen == false) {
 			$(".tabs").animate({
-				left: "5%"
+				left: tabsLeft
 			}, animationSpeed);
 			$(".home").animate({
-				left: "10%"
+				left: cardLeft
 			}, animationSpeed);
 			cardIsOpen = true;
-			$(".slider").css("left", "10%")
+			$(".slider").css("left", cardLeft)
 		}
 	}
 }
 
-function removeActive(toLocation) {
+// Removes active class identifier from formerly active card, moves it to center
+function removeActive() {
 	$(".active").animate({
 		opacity: 0,
-		left: (toLocation + "%")
+		left: (cardCenter)
 	}, animationSpeed);
 	$(".active").addClass("card-hidden").removeClass("active");
 }
 
+// Returns Home and Tabs to original positions
 function closeCards() {
-	removeActive(30)
+	removeActive()
 	$(".tabs").animate({
-			left: "25%"
+			left: tabsCenter
 		}, animationSpeed);
 	$(".home").animate({
-			left: "30%"
+			left: cardCenter
 		}, animationSpeed);
 	cardIsOpen = false;
-	$(".slider").css("left", "30%")
+	$(".slider").css("left", cardCenter)
 }
 
 </script>
