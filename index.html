@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link href="bootstrap.css" rel="stylesheet">
+    <script src="jquery-1.12.1.min.js">
+    </script>
+    <link href="style.css" rel="stylesheet">
+    <title>Shifting Cards</title>
+</head>
+<body>
+    <div class="tabs box">
+    	<a id="home" onclick="closeCards()">Home</a><br>
+        <a id="tab1" onclick="animateCard(1)">Tab 1</a><br>
+        <a id="tab2" onclick="animateCard(2)">Tab 2</a><br>
+        <a id="tab3" onclick="animateCard(3)">Tab 3</a><br>
+    </div>
+
+    <div class="home card box goes-left">
+        <p>Lorem Ipsum is simply dummy text of the printing and typesetting
+            industry. Lorem Ipsum has been the industry's standard dummy text
+            ever since the 1500s, when an unknown printer took a galley of type
+            and scrambled it to make a type specimen book. It has survived not
+            only five centuries, but also the leap into electronic typesetting,
+            remaining essentially unchanged. It was popularised in the 1960s
+            with the release of Letraset sheets containing Lorem Ipsum
+            passages, and more recently with desktop publishing software like
+            Aldus PageMaker including versions of Lorem Ipsum.</p>
+    </div>
+
+    <div id="card1" class="card-hidden card box slider">
+            <p>Why hello there!</p>
+    </div>
+
+    <div id="card2" class="card-hidden card box slider">
+        	<p>I'm the second card!</p>
+    </div>
+
+    <div id="card3" class="card-hidden card box slider">
+        	<p>hi</p>
+    </div>
+
+</body>
+
+</html>
+
+<script>
+
+var cardIsOpen = false;
+var animationSpeed = 375;
+
+function animateCard(cardNum) {
+	// animationSpeed = 375;
+	removeActive(10);
+	$(("#card"+cardNum)).animate({
+		opacity: 1,
+		left: "45%"
+	}, animationSpeed);
+	$(("#card"+cardNum)).removeClass("card-hidden").addClass("active");
+	if (cardIsOpen == false) {
+		$(".tabs").animate({
+			left: "5%"
+		}, animationSpeed);
+		$(".home").animate({
+			left: "10%"
+		}, animationSpeed);
+		cardIsOpen = true;
+		$(".slider").css("left", "10%")
+	}
+}
+
+function removeActive(toLocation) {
+	$(".active").animate({
+		opacity: 0,
+		left: (toLocation + "%")
+	}, animationSpeed);
+	$(".active").addClass("card-hidden").removeClass("active");
+}
+
+function closeCards() {
+	removeActive(30)
+	$(".tabs").animate({
+			left: "25%"
+		}, animationSpeed);
+	$(".home").animate({
+			left: "30%"
+		}, animationSpeed);
+	cardIsOpen = false;
+	$(".slider").css("left", "30%")
+}
+
+</script>
